@@ -1,25 +1,14 @@
 const mysql = require('mysql2/promise');
+
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || process.env.MYSQLHOST,     // Railway usa MYSQLHOST
-  port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
-  user: process.env.DB_USER || process.env.MYSQLUSER,
-  password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
-  database: process.env.DB_NAME || process.env.MYSQLDATABASE,
+  host: process.env.DB_HOST || process.env.MYSQLHOST || 'bclwooyacjleem4nh2rc-mysql.services.clever-cloud.com',
+  port: parseInt(process.env.DB_PORT || process.env.MYSQLPORT || 3306),
+  user: process.env.DB_USER || process.env.MYSQLUSER || 'uxumtabrdukmzec1',
+  password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || '4u8hUkUAQEfB5zeBB5LP',
+  database: process.env.DB_NAME || process.env.MYSQLDATABASE || 'bclwooyacjleem4nh2rc',
   waitForConnections: true,
-  connectionLimit: 10
+  connectionLimit: 10,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
-
-
-const testConnection = async () => {
-  try {
-    const connection = await pool.getConnection();
-    console.log('✅ Conexión a MySQL establecida');
-    connection.release();
-  } catch (error) {
-    console.error('❌ Error de conexión a MySQL:', error.message);
-  }
-};
-
-testConnection();
 
 module.exports = { pool };
