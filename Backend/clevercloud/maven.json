@@ -1,0 +1,11 @@
+{
+  "build": {
+    "type": "nodejs",
+    "nodejs": {
+      "version": "18"
+    }
+  },
+  "deploy": {
+    "command": "npm start"
+  }
+}
